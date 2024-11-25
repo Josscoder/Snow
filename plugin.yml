@@ -1,0 +1,6 @@
+name: Snow
+main: Snow\SnowPlugin
+authors:
+- Josscoder
+version: 1.0.0-ALPHA
+api: 5.17.0

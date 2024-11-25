@@ -1,0 +1,36 @@
+{
+    "name": "josscoder/snow",
+    "type": "pocketmine-plugin",
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Josscoder",
+            "email": "josscoder@hotmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "require-dev": {
+        "nethergamesmc/pocketmine-mp": "dev-stable",
+        "sof3/pharynx": "dev-master",
+        "phpstan/phpstan": "1.12.7"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:NetherGamesMC/PocketMine-MP.git"
+        }
+    ],
+    "scripts": {
+        "lint": [
+            "./vendor/bin/phpstan analyse --no-progress"
+        ],
+        "build": [
+            "@php -dphar.readonly=0 ./vendor/bin/pharynx -v -c -i ."
+        ]
+    }
+}
