@@ -13,6 +13,7 @@ use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
 use pocketmine\utils\TextFormat;
+use pocketmine\world\World;
 
 //This project was made with the help of https://github.com/PetteriM1/Snow/blob/master/src/main/java/suomicraftpe/events/christmas/Main.java
 class SnowPlugin extends PluginBase implements Listener
@@ -37,10 +38,22 @@ class SnowPlugin extends PluginBase implements Listener
 
     public function onChunkLoaded(ChunkLoadEvent $event): void
     {
-        for ($x = 0; $x < 16; $x++) {
-            for ($y = 0; $y < 16; $y++) {
-                for ($z = 0; $z < 16; $z++) {
-                    $event->getChunk()->setBiomeId($x, $y, $z, BiomeIds::ICE_PLAINS);
+        $world = $event->getWorld();
+        $chunkX = $event->getChunkX();
+        $chunkZ = $event->getChunkZ();
+
+        for ($x = 0; $x < 16; ++$x)
+        {
+            for ($z = 0; $z < 16; ++$z)
+            {
+                $min = World::Y_MIN;
+                $max = World::Y_MAX;
+
+                for ($y = $min; $y < $max; ++$y)  {
+                    $worldX = $chunkX * 16 + $x;
+                    $worldZ = $chunkZ * 16 + $z;
+
+                    $world->getChunk($chunkX, $chunkZ)->setBiomeId($worldX, $y, $worldZ, BiomeIds::ICE_PLAINS);
                 }
             }
         }
