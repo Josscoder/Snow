@@ -53,7 +53,9 @@ class SnowPlugin extends PluginBase implements Listener
                     $worldX = $chunkX * 16 + $x;
                     $worldZ = $chunkZ * 16 + $z;
 
-                    $world->getChunk($chunkX, $chunkZ)->setBiomeId($worldX, $y, $worldZ, BiomeIds::ICE_PLAINS);
+                    if (!is_null($chunk = $world->getChunk($chunkX, $chunkZ))) {
+                        $chunk->setBiomeId($worldX, $y, $worldZ, BiomeIds::ICE_PLAINS);
+                    }
                 }
             }
         }
@@ -84,7 +86,17 @@ class SnowPlugin extends PluginBase implements Listener
     private function handleSetRaining(Player $player): void
     {
         $this->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($player): void {
-            if (!$player->isOnline() || !in_array($player->getWorld()->getFolderName(), $this->worlds)) {
+            if (!$player->isOnline()) {
+                return;
+            }
+
+            if (!in_array($player->getWorld()->getFolderName(), $this->worlds)) {
+                $player->getNetworkSession()->sendDataPacket(LevelEventPacket::create(
+                    LevelEvent::STOP_RAIN,
+                    6000000,
+                    $player->getPosition()
+                ));
+
                 return;
             }
 
