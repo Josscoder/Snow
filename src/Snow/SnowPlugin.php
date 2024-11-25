@@ -17,8 +17,19 @@ use pocketmine\utils\TextFormat;
 //This project was made with the help of https://github.com/PetteriM1/Snow/blob/master/src/main/java/suomicraftpe/events/christmas/Main.java
 class SnowPlugin extends PluginBase implements Listener
 {
+    /**
+     * @var string[]
+     */
+    private array $worlds;
+
     protected function onEnable(): void
     {
+        $this->saveDefaultConfig();
+
+        /** @var string[] $worlds */
+        $worlds = (array) $this->getConfig()->get('worlds', []);
+        $this->worlds = $worlds;
+
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
 
         $this->getLogger()->info(TextFormat::GREEN . 'Snow plugin has been enabled!');
@@ -60,7 +71,7 @@ class SnowPlugin extends PluginBase implements Listener
     private function handleSetRaining(Player $player): void
     {
         $this->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($player): void {
-            if (!$player->isOnline()) {
+            if (!$player->isOnline() || !in_array($player->getWorld()?->getFolderName(), $this->worlds)) {
                 return;
             }
 
