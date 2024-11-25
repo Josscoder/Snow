@@ -26,7 +26,7 @@ jobs:
         run: curl -o composer.phar "https://getcomposer.org/composer-stable.phar"
         
       - name: Config Composer
-        run: ./bin/php7/bin/php composer.phar config -g github-oauth.github.com ${{ secrets.BRAWN_TOKEN }}
+        run: ./bin/php7/bin/php composer.phar config -g github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Composer dependencies
         run: ./bin/php7/bin/php composer.phar install --prefer-dist --no-interaction
