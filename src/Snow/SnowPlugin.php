@@ -61,7 +61,7 @@ class SnowPlugin extends PluginBase implements Listener
         $from = $event->getFrom();
         $to = $event->getTo();
 
-        if ($from->getWorld()?->getFolderName() === $to->getWorld()?->getFolderName()) {
+        if ($from->getWorld()->getFolderName() === $to->getWorld()->getFolderName()) {
             return;
         }
 
@@ -71,7 +71,7 @@ class SnowPlugin extends PluginBase implements Listener
     private function handleSetRaining(Player $player): void
     {
         $this->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($player): void {
-            if (!$player->isOnline() || !in_array($player->getWorld()?->getFolderName(), $this->worlds)) {
+            if (!$player->isOnline() || !in_array($player->getWorld()->getFolderName(), $this->worlds)) {
                 return;
             }
 
