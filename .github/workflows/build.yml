@@ -34,7 +34,7 @@ jobs:
         run: ./bin/php7/bin/php composer.phar install --prefer-dist --no-interaction
 
       - name: Run Build
-        run: ./bin/php7/bin/php -dphar.readonly=0 vendor/bin/pharynx -v -c -i .
+        run: ./bin/php7/bin/php -dphar.readonly=0 vendor/bin/pharynx -i . -c -p=Snow.phar
 
       - name: Get plugin.yml information
         run: |
