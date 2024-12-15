@@ -30,7 +30,7 @@
             "./vendor/bin/phpstan analyse --no-progress"
         ],
         "build": [
-            "@php -dphar.readonly=0 ./vendor/bin/pharynx -v -c -i ."
+            "@php -dphar.readonly=0 ./vendor/bin/pharynx -i . -c -p=Snow.phar"
         ]
     }
 }

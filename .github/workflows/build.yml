@@ -50,7 +50,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
-          artifacts: ${{ github.workspace }}/output.phar
+          artifacts: ${{ github.workspace }}/Snow.phar
           draft: false
           name: ${{ env.PLUGIN_NAME }} v${{ env.PLUGIN_VERSION }} Release
           tag: v${{ env.PLUGIN_VERSION }}
