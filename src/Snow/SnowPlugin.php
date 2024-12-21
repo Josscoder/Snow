@@ -23,6 +23,8 @@ class SnowPlugin extends PluginBase implements Listener
      */
     private array $worlds;
 
+    private int $particlesAmount;
+
     protected function onEnable(): void
     {
         $this->saveDefaultConfig();
@@ -30,6 +32,10 @@ class SnowPlugin extends PluginBase implements Listener
         /** @var string[] $worlds */
         $worlds = (array) $this->getConfig()->get('worlds', []);
         $this->worlds = $worlds;
+
+        /** @var int $particlesAmount */
+        $particlesAmount = $this->getConfig()->get('particlesAmount', 5000);
+        $this->particlesAmount = $particlesAmount;
 
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
 
@@ -93,7 +99,7 @@ class SnowPlugin extends PluginBase implements Listener
             if (!in_array($player->getWorld()->getFolderName(), $this->worlds)) {
                 $player->getNetworkSession()->sendDataPacket(LevelEventPacket::create(
                     LevelEvent::STOP_RAIN,
-                    6000000,
+                    0,
                     $player->getPosition()
                 ));
 
@@ -102,7 +108,7 @@ class SnowPlugin extends PluginBase implements Listener
 
             $player->getNetworkSession()->sendDataPacket(LevelEventPacket::create(
                 LevelEvent::START_RAIN,
-                6000000,
+                $this->particlesAmount,
                 $player->getPosition()
             ));
         }), 10);

@@ -1,2 +1,4 @@
 worlds:
   - world
+
+particlesAmount: 5000
