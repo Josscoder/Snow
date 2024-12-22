@@ -6,7 +6,7 @@ use pocketmine\data\bedrock\BiomeIds;
 use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
-use pocketmine\event\world\ChunkLoadEvent;
+use pocketmine\event\world\ChunkPopulateEvent;
 use pocketmine\network\mcpe\protocol\LevelEventPacket;
 use pocketmine\network\mcpe\protocol\types\LevelEvent;
 use pocketmine\player\Player;
@@ -42,25 +42,16 @@ class SnowPlugin extends PluginBase implements Listener
         $this->getLogger()->info(TextFormat::GREEN . 'Snow plugin has been enabled!');
     }
 
-    public function onChunkLoaded(ChunkLoadEvent $event): void
+    public function onChunkPopulate(ChunkPopulateEvent $event): void
     {
-        $world = $event->getWorld();
         $chunkX = $event->getChunkX();
         $chunkZ = $event->getChunkZ();
 
-        for ($x = 0; $x < 16; ++$x)
-        {
-            for ($z = 0; $z < 16; ++$z)
-            {
-                $min = World::Y_MIN;
-                $max = World::Y_MAX;
-
-                for ($y = $min; $y < $max; ++$y)  {
-                    $worldX = $chunkX * 16 + $x;
-                    $worldZ = $chunkZ * 16 + $z;
-
-                    if (!is_null($chunk = $world->getChunk($chunkX, $chunkZ))) {
-                        $chunk->setBiomeId($worldX, $y, $worldZ, BiomeIds::ICE_PLAINS);
+        for ($x = 0; $x < $chunkX; ++$x) {
+            for ($z = 0; $z < $chunkZ; ++$z) {
+                for ($y = World::Y_MIN; $y < World::Y_MAX; ++$y)  {
+                    if (!is_null($chunk = $event->getWorld()->getChunk($chunkX, $chunkZ))) {
+                        $chunk->setBiomeId($chunkX, $y, $chunkZ, BiomeIds::ICE_PLAINS);
                     }
                 }
             }
