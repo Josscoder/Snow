@@ -47,11 +47,14 @@ class SnowPlugin extends PluginBase implements Listener
         $chunkX = $event->getChunkX();
         $chunkZ = $event->getChunkZ();
 
-        for ($x = 0; $x < $chunkX; ++$x) {
-            for ($z = 0; $z < $chunkZ; ++$z) {
+        for ($x = 0; $x < 16; ++$x) {
+            for ($z = 0; $z < 16; ++$z) {
                 for ($y = World::Y_MIN; $y < World::Y_MAX; ++$y)  {
+                    $worldX = $chunkX * 16 + $x;
+                    $worldZ = $chunkZ * 16 + $z;
+
                     if (!is_null($chunk = $event->getWorld()->getChunk($chunkX, $chunkZ))) {
-                        $chunk->setBiomeId($chunkX, $y, $chunkZ, BiomeIds::ICE_PLAINS);
+                        $chunk->setBiomeId($worldX, $y, $worldZ, BiomeIds::ICE_PLAINS);
                     }
                 }
             }
