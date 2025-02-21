@@ -35,7 +35,7 @@ class SnowPlugin extends PluginBase implements Listener
         $this->worlds = $worlds;
 
         /** @var int $particlesAmount */
-        $particlesAmount = $this->getConfig()->get('particlesAmount', 1000);
+        $particlesAmount = $this->getConfig()->get('particlesAmount', 2500);
         $this->particlesAmount = $particlesAmount;
 
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
