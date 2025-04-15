@@ -45,6 +45,10 @@ class SnowPlugin extends PluginBase implements Listener
 
     public function onChunkPopulate(ChunkPopulateEvent $event): void
     {
+        if (!in_array($event->getWorld()->getFolderName(), $this->worlds)) {
+            return;
+        }
+
         $chunkX = $event->getChunkX();
         $chunkZ = $event->getChunkZ();
 
