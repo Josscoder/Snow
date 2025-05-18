@@ -6,6 +6,7 @@ use pocketmine\data\bedrock\BiomeIds;
 use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\world\ChunkLoadEvent;
 use pocketmine\event\world\ChunkPopulateEvent;
 use pocketmine\network\mcpe\protocol\LevelEventPacket;
 use pocketmine\network\mcpe\protocol\types\LevelEvent;
@@ -43,7 +44,7 @@ class SnowPlugin extends PluginBase implements Listener
         $this->getLogger()->info(TextFormat::GREEN . 'Snow plugin has been enabled!');
     }
 
-    public function onChunkPopulate(ChunkPopulateEvent $event): void
+    public function onChunkLoaded(ChunkLoadEvent $event): void
     {
         if (!in_array($event->getWorld()->getFolderName(), $this->worlds)) {
             return;
